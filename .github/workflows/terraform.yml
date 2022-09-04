@@ -135,7 +135,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: plan
-        path: ${{env.ROOT_PATH}}/dev.tfplan
+        path: ${{env.ROOT_PATH}}
 
     # Generates an execution plan for Terraform
     - name: Terraform Apply
