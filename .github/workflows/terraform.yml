@@ -90,7 +90,7 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
-      run: terraform plan -input=false
+      run: terraform plan -input=false -var-file dev.tfvars
       working-directory: ${{env.ROOT_PATH}}
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
