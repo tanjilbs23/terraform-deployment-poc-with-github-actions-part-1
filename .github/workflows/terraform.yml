@@ -127,5 +127,5 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Apply
-      run: terraform apply "dev.tfplan" -auto-approve
+      run: terraform apply "dev.tfplan"
       working-directory: ${{env.ROOT_PATH}}
