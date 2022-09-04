@@ -12,10 +12,10 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "b" {
-  bucket = "My bucket-tanjil-september-2022"
+  bucket = var.bucket_name
 
   tags = {
-    Name        = "My bucket-tanjil-september-2022"
+    Name        = var.bucket_tag
     Environment = "Dev"
   }
 }
