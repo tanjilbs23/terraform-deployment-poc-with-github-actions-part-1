@@ -11,7 +11,7 @@ env:
   AWS_SECRET_KEY: ${{secrets.AWS_SECRET_KEY}}
   AWS_REGION: ${{secrets.AWS_REGION}}
   TF_API_TOKEN: ${{secrets.TF_API_TOKEN}}
-  ROOT_PATH: '${{ github.workspace }}/src/terraform'
+  ROOT_PATH: '${{ github.workspace }}'
 
 jobs:
   terraform_plan:
@@ -24,6 +24,16 @@ jobs:
         shell: bash
 
     steps:
+
+    - name: Adding workspace configuration in main.tf
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: |
+          echo "$MY_SECRET" >> main.tf
+          cat main.tf
+      shell: bash
+      env:
+        MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
+
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
@@ -48,52 +58,52 @@ jobs:
       run: terraform plan -input=false -out=dev.tfplan -var-file dev.tfvars
       working-directory: ${{env.ROOT_PATH}}
 
-    - name: Upload plan for terraform apply
-      uses: actions/upload-artifact@v3
-      with:
-        name: plan
-        path: ${{env.ROOT_PATH}}/dev.tfplan
+  #   - name: Upload plan for terraform apply
+  #     uses: actions/upload-artifact@v3
+  #     with:
+  #       name: plan
+  #       path: ${{env.ROOT_PATH}}/dev.tfplan
 
-      # On push to "main", build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    # - name: Terraform Apply
-    #   if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-    #   run: terraform apply -auto-approve -input=false
+  #     # On push to "main", build or change infrastructure according to Terraform configuration files
+  #     # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+  #   # - name: Terraform Apply
+  #   #   if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+  #   #   run: terraform apply -auto-approve -input=false
 
-  terraform_apply:
-    name: 'Terraform Apply'
-    runs-on: ubuntu-latest
-    needs: [terraform_plan]
-    environment: production
+  # terraform_apply:
+  #   name: 'Terraform Apply'
+  #   runs-on: ubuntu-latest
+  #   needs: [terraform_plan]
+  #   environment: production
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
+  #   # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+  #   defaults:
+  #     run:
+  #       shell: bash
 
-    steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v3
+  #   steps:
+  #   # Checkout the repository to the GitHub Actions runner
+  #   - name: Checkout
+  #     uses: actions/checkout@v3
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  #   # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+  #   - name: Setup Terraform
+  #     uses: hashicorp/setup-terraform@v1
+  #     with:
+  #       cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform init
-      working-directory: ${{env.ROOT_PATH}}
+  #   # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+  #   - name: Terraform Init
+  #     run: terraform init
+  #     working-directory: ${{env.ROOT_PATH}}
 
-    - name: Downloading tf plan file
-      uses: actions/download-artifact@v3
-      with:
-        name: plan
-        path: ${{env.ROOT_PATH}}
+  #   - name: Downloading tf plan file
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: plan
+  #       path: ${{env.ROOT_PATH}}
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Apply
-      run: terraform apply "dev.tfplan"
-      working-directory: ${{env.ROOT_PATH}}
+  #   # Generates an execution plan for Terraform
+  #   - name: Terraform Apply
+  #     run: terraform apply "dev.tfplan"
+  #     working-directory: ${{env.ROOT_PATH}}
