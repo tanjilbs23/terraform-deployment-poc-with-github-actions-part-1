@@ -24,14 +24,14 @@ jobs:
 
     steps:
 
-    # - name: Adding workspace configuration in main.tf
-    #   if: ${{ github.ref == 'refs/heads/main' }}
-    #   run: |
-    #       echo "$MY_SECRET" >> main.tf
-    #       cat main.tf
-    #   shell: bash
-    #   env:
-    #     MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
+    - name: Adding workspace configuration in main.tf
+      if: ${{ github.ref == 'refs/heads/main' }}
+      run: |
+          echo "$MY_SECRET" >> main.tf
+          cat main.tf
+      shell: bash
+      env:
+        MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
 
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
