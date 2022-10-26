@@ -50,6 +50,8 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: ${{env.ROOT_PATH}}
+      env:
+        TF_VAR_env: ${{ secrets.DEV_ENV }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
