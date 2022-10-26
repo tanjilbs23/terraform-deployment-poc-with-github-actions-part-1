@@ -5,7 +5,7 @@ terraform {
     organization = "personal-testing-terraform"
 
     workspaces {
-      name = "test-${var.Environment}"
+      name = var.workspace
     }
   }
 }
