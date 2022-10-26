@@ -3,7 +3,7 @@ provider "aws" {}
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket                  = "oct-26-2022-tanjil_bhuiyan"
+  bucket                  = "oct-26-2022-tanjil"
   block_public_acls       = true
   block_public_policy     = true
   restrict_public_buckets = true
