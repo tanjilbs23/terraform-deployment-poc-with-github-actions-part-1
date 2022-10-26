@@ -1,3 +1,17 @@
+# Test
+
+terraform {
+  cloud {
+    organization = "personal-testing-terraform"
+
+    workspaces {
+      name = "test-${var.Environment}"
+    }
+  }
+}
+
+# End Test
+
 provider "aws" {}
 
 module "s3_bucket" {
