@@ -23,7 +23,7 @@ module "s3_bucket" {
 
   tags = {
     Name        = "oct-26-2022-tanjil"
-    Environment = var.environment
+    Environment = var.Environment
   }
 
 }
