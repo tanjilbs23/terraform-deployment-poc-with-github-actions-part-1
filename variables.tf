@@ -5,5 +5,5 @@
 #   type=string
 # }
 variable "Environment" {
-  type=string
+  type = string
 }
