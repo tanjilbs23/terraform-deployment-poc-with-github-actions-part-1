@@ -49,6 +49,8 @@ jobs:
     - name: Terraform Init
       run: terraform init
       working-directory: ${{env.ROOT_PATH}}
+      with:
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
