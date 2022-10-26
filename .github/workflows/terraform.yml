@@ -44,13 +44,14 @@ jobs:
       # shell: bash
       # env:
       #   MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
+      working-directory: ${{env.ROOT_PATH}}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
-      working-directory: ${{env.ROOT_PATH}}
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      working-directory: ${{env.ROOT_PATH}}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
