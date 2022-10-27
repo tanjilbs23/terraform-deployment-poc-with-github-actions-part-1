@@ -51,6 +51,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
+      id: terraform_init
       run: terraform init
       working-directory: ${{env.ROOT_PATH}}
       env:
@@ -58,11 +59,21 @@ jobs:
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
+      id: terraform_plan
       run: terraform plan -input=false -out=dev.tfplan -var-file dev.tfvars
       working-directory: ${{env.ROOT_PATH}}
     - name: Terraform Apply
+      id: terraform_apply
       run: terraform apply "dev.tfplan"
       working-directory: ${{env.ROOT_PATH}}
+
+    - name: slack - GitHub Actions Slack integration
+      uses: act10ns/slack@v1.6.0
+      with:
+        status: ${{ job.status }}
+        config: .github/config/slack.yml
+        steps: ${{ toJson(steps) }}
+      if: always()
 
   #   - name: Upload plan for terraform apply
   #     uses: actions/upload-artifact@v3
