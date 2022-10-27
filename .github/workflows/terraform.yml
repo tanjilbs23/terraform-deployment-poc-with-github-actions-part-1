@@ -49,6 +49,9 @@ jobs:
         MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
       working-directory: ${{env.ROOT_PATH}}
 
+    - name: getconf ARG_MAX
+      run: echo $(getconf ARG_MAX)
+
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: terraform_init
@@ -67,13 +70,13 @@ jobs:
       run: terraform apply "dev.tfplan"
       working-directory: ${{env.ROOT_PATH}}
 
-    - name: slack - GitHub Actions Slack integration
-      uses: act10ns/slack@v1.6.0
-      with:
-        status: ${{ job.status }}
-        config: .github/config/slack.yml
-        steps: ${{ toJson(steps) }}
-      if: always()
+    # - name: slack - GitHub Actions Slack integration
+    #   uses: act10ns/slack@v1.6.0
+    #   with:
+    #     status: ${{ job.status }}
+    #     config: .github/config/slack.yml
+    #     steps: ${{ toJson(steps) }}
+    #   if: always()
 
   #   - name: Upload plan for terraform apply
   #     uses: actions/upload-artifact@v3
