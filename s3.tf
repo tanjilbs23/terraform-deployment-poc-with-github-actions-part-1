@@ -1,14 +1,4 @@
-# Test
 
-terraform {
-  cloud {
-    organization = "personal-testing-terraform"
-
-    workspaces {
-      name = var.workspace
-    }
-  }
-}
 
 # End Test
 

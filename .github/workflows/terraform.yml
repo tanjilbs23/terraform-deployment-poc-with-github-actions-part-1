@@ -12,6 +12,7 @@ env:
   TF_API_TOKEN: ${{secrets.TF_API_TOKEN}}
   ROOT_PATH: '${{ github.workspace }}'
   MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 jobs:
   terraform_plan:
@@ -28,23 +29,25 @@ jobs:
 
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
+      id: checkout_source_code
       uses: actions/checkout@v3
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
+      id: setup_terraform
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    # - name: Adding workspace configuration in main.tf
-    #   # if: ${{ github.ref == 'refs/heads/main' }}
-    #   run: |
-    #       echo "$MY_SECRET" >> main.tf
-    #       cat main.tf
-    #   # shell: bash
-    #   # env:
-    #   #   MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
-    #   working-directory: ${{env.ROOT_PATH}}
+    - name: Adding workspace configuration in main.tf
+      id: adding_workspace_configuration
+      run: |
+          echo "$MY_SECRET" >> main.tf
+          cat main.tf
+      shell: bash
+      env:
+        MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
+      working-directory: ${{env.ROOT_PATH}}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
