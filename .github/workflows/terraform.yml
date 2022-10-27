@@ -70,13 +70,13 @@ jobs:
       run: terraform apply "dev.tfplan" >/dev/null
       working-directory: ${{env.ROOT_PATH}}
 
-    # - name: slack - GitHub Actions Slack integration
-    #   uses: act10ns/slack@v1.6.0
-    #   with:
-    #     status: ${{ job.status }}
-    #     config: .github/config/slack.yml
-    #     steps: ${{ toJson(steps) }}
-    #   if: always()
+    - name: slack - GitHub Actions Slack integration
+      uses: act10ns/slack@v1.6.0
+      with:
+        status: ${{ job.status }}
+        config: .github/config/slack.yml
+        steps: ${{ toJson(steps) }}
+      if: always()
 
   #   - name: Upload plan for terraform apply
   #     uses: actions/upload-artifact@v3
