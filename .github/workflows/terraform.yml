@@ -63,7 +63,7 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: terraform_plan
-      run: terraform plan -input=false -compact-warnings -out=dev.tfplan -var-file dev.tfvars
+      run: terraform plan -input=false -out=dev.tfplan -var-file dev.tfvars | landscape
       working-directory: ${{env.ROOT_PATH}}
     - name: Terraform Apply
       id: terraform_apply
