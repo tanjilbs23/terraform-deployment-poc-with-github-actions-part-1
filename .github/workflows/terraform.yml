@@ -63,11 +63,11 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: terraform_plan
-      run: terraform plan -input=false -out=dev.tfplan -var-file dev.tfvars | landscape
+      run: terraform plan -input=false -out=dev.tfplan -var-file dev.tfvars >/dev/null
       working-directory: ${{env.ROOT_PATH}}
     - name: Terraform Apply
       id: terraform_apply
-      run: terraform apply "dev.tfplan"
+      run: terraform apply "dev.tfplan" >/dev/null
       working-directory: ${{env.ROOT_PATH}}
 
     # - name: slack - GitHub Actions Slack integration
