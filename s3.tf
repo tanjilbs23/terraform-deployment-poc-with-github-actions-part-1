@@ -27,7 +27,7 @@ bucket                  = "october-26-2022-new-world"
 
   tags = {
     Name        = "october-26-2022-new-world"
-    Environment = var.Environment
+    Environment = var.environment
   }
 
 }
