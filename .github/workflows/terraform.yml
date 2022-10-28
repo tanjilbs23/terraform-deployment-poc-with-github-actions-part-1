@@ -51,7 +51,8 @@ jobs:
 
     - name: getconf ARG_MAX
       run: echo $(getconf ARG_MAX)
-
+    - name: miscellaneous
+      run: mkdir log
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: terraform_init
@@ -63,12 +64,17 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: terraform_plan
-      run: terraform plan -input=false -out=dev.tfplan -var-file dev.tfvars >/dev/null
+      run: terraform plan -input=false -out=dev.tfplan -var-file dev.tfvars > log/plan.log
       working-directory: ${{env.ROOT_PATH}}
     - name: Terraform Apply
       id: terraform_apply
-      run: terraform apply "dev.tfplan" >/dev/null
+      run: terraform apply "dev.tfplan" >> log/apply.log
       working-directory: ${{env.ROOT_PATH}}
+
+    - name: Log Review
+      run: |
+        cat log/plan.log
+        cat log/apply.log
 
     - name: slack - GitHub Actions Slack integration
       uses: act10ns/slack@v1.6.0
