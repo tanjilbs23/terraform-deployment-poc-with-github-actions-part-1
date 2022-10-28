@@ -7,7 +7,7 @@ provider "aws" {}
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket                  = "october-27-2022-new-world"
+bucket                  = "october-26-2022-new-world"
   block_public_acls       = true
   block_public_policy     = true
   restrict_public_buckets = true
@@ -26,7 +26,7 @@ module "s3_bucket" {
   }
 
   tags = {
-    Name        = "october-27-2022-new-world"
+    Name        = "october-26-2022-new-world"
     Environment = var.Environment
   }
 
