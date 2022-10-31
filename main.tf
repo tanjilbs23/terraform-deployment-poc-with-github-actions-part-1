@@ -2,9 +2,9 @@
 # AWS Provider
 provider "aws" {}
 
-  data "aws_ssm_parameter" "bucket_name" {
-    name = "/${var.environment}/BUCKET"
-  }
+data "aws_ssm_parameter" "bucket_name" {
+  name = "/${var.environment}/BUCKET"
+}
 
 # S3 Bucket
 module "s3_bucket" {
@@ -23,7 +23,7 @@ module "s3_bucket" {
   server_side_encryption_configuration = {
     rule = {
       apply_server_side_encryption_by_default = {
-        sse_algorithm     = "AES256"
+        sse_algorithm = "AES256"
       }
     }
   }
