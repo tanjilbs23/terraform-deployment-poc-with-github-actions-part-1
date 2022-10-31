@@ -11,7 +11,7 @@ terraform {
 provider "aws" {}
 
 data "aws_ssm_parameter" "bucket_name" {
-  name = "/${var.environment}/BUCKET"
+  name = "/${var.environment}/bucket"
 }
 
 # module "s3_bucket" {
