@@ -10,7 +10,7 @@ provider "aws" {}
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket                  = data.aws_ssm_parameter.bucket_name.value
+  bucket                  = "tanjil_oct_23_20202"
   block_public_acls       = true
   block_public_policy     = true
   restrict_public_buckets = true
