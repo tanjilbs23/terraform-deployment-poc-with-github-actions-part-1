@@ -1,4 +1,12 @@
+terraform {
+  cloud {
+    organization = "personal-testing-terraform"
 
+    workspaces {
+      name = "sharebus-dev"
+    }
+  }
+}
 # AWS Provider
 provider "aws" {}
 

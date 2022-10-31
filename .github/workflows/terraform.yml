@@ -39,23 +39,23 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Adding workspace configuration in main.tf
-      id: adding_workspace_configuration
-      run: |
-          echo "$MY_SECRET" >> main.tf
-          cat main.tf
-      shell: bash
-      env:
-        MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
-      working-directory: ${{env.ROOT_PATH}}
+    # - name: Adding workspace configuration in main.tf
+    #   id: adding_workspace_configuration
+    #   run: |
+    #       echo "$MY_SECRET" >> main.tf
+    #       cat main.tf
+    #   shell: bash
+    #   env:
+    #     MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
+    #   working-directory: ${{env.ROOT_PATH}}
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: terraform_init
       run: terraform init
       working-directory: ${{env.ROOT_PATH}}
-      env:
-        TF_VAR_workspace: ${{ secrets.DEV_WORKSPACE }}
+      # env:
+      #   TF_VAR_workspace: ${{ secrets.DEV_WORKSPACE }}
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
