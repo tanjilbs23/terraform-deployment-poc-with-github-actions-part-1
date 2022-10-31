@@ -46,7 +46,7 @@ data "aws_ssm_parameter" "bucket_name" {
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket = "/${var.environment}/BUCKET"
+  bucket = data.aws_ssm_parameter.bucket_name.name
   acl    = "private"
 
   # versioning = {
