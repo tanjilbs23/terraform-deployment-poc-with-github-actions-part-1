@@ -49,10 +49,6 @@ jobs:
         MY_SECRET: ${{secrets.MAIN_WORKSPACE_CONFIG}}
       working-directory: ${{env.ROOT_PATH}}
 
-    - name: getconf ARG_MAX
-      run: echo $(getconf ARG_MAX)
-    - name: miscellaneous
-      run: mkdir log
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: terraform_init
@@ -64,7 +60,7 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: terraform_plan
-      run: terraform plan -input=false -out=dev.tfplan
+      run: terraform plan
       working-directory: ${{env.ROOT_PATH}}
       env:
         TF_VAR_environment: ${{ secrets.DEV_ENV }}
