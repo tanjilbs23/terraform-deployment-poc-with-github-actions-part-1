@@ -65,7 +65,7 @@ jobs:
         TF_VAR_environment: ${{ secrets.DEV_ENV }}
         TF_VAR_project: ${{ secrets.DEV_PROJECT }}
     - name: Terraform Apply
-      id: terraform_apply
+      id: "terraform apply"
       run: terraform apply -auto-approve
       working-directory: ${{env.ROOT_PATH}}
       env:
