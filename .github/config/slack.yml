@@ -1,8 +1,8 @@
-username: GitHub-CI
-icon_url: https://octodex.github.com/images/mona-the-rivetertocat.png
+username: Sharebus
+icon_url: https://octodex.github.com/images/daftpunktocat-guy.gif
 
 pretext: Triggered via {{eventName}} by {{actor}} {{or action "action"}} {{ref}} `{{diffRef}}`
-title: GitHub Actions
+title: Sharebus CI/CD
 title_link: https://support.github.com
 
 text: |
@@ -46,14 +46,14 @@ footer: >-
   <{{repositoryUrl}}|{{repositoryName}}> {{workflow}} #{{runNumber}}
 
 colors:
-  success: '#5DADE2'
-  failure: '#884EA0'
-  cancelled: '#A569BD'
+  success: '#3bcf0e'
+  failure: '#b01010'
+  cancelled: '#9ba39b'
   default: '#7D3C98'
 
 icons:
-  success: ':white_check_mark:'
-  failure: ':grimacing:'
+  success: ':heavy_check_mark:'
+  failure: ':o:'
   cancelled: ':x:'
-  skipped: ':heavy_minus_sign:'
+  skipped: ':black_circle:'
   default: ':interrobang:'
