@@ -2,9 +2,9 @@
 # AWS Provider
 provider "aws" {}
 
-data "aws_ssm_parameter" "bucket_name" {
-  name = "/${var.environment}/BUCKET"
-}
+# data "aws_ssm_parameter" "bucket_name" {
+#   name = "/${var.environment}/BUCKET"
+# }
 
 # S3 Bucket
 module "s3_bucket" {
