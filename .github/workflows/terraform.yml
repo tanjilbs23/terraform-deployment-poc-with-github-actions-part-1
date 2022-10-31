@@ -69,6 +69,9 @@ jobs:
       id: terraform_apply
       run: terraform apply
       working-directory: ${{env.ROOT_PATH}}
+      env:
+        TF_VAR_environment: ${{ secrets.DEV_ENV }}
+        TF_VAR_project: ${{ secrets.DEV_PROJECT }}
 
     # - name: Log Review
     #   run: |
