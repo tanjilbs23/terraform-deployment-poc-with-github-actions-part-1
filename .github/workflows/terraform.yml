@@ -65,10 +65,10 @@ jobs:
       env:
         TF_VAR_environment: ${{ secrets.DEV_ENV }}
         TF_VAR_project: ${{ secrets.DEV_PROJECT }}
-    # - name: Terraform Apply
-    #   id: terraform_apply
-    #   run: terraform apply "dev.tfplan"
-    #   working-directory: ${{env.ROOT_PATH}}
+    - name: Terraform Apply
+      id: terraform_apply
+      run: terraform apply
+      working-directory: ${{env.ROOT_PATH}}
 
     # - name: Log Review
     #   run: |
