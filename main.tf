@@ -1,13 +1,16 @@
 
-
-# End Test
-
+# AWS Provider
 provider "aws" {}
 
+  data "aws_ssm_parameter" "bucket_name" {
+    name = "/${var.environment}/BUCKET"
+  }
+
+# S3 Bucket
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-bucket                  = "october-26-2022-new-world"
+  bucket                  = data.aws_ssm_parameter.bucket_name.value
   block_public_acls       = true
   block_public_policy     = true
   restrict_public_buckets = true
@@ -20,14 +23,15 @@ bucket                  = "october-26-2022-new-world"
   server_side_encryption_configuration = {
     rule = {
       apply_server_side_encryption_by_default = {
-        sse_algorithm = "AES256"
+        sse_algorithm     = "AES256"
       }
     }
   }
 
   tags = {
-    Name        = "october-26-2022-new-world"
+    Name        = "sharebus-fe-${var.environment}"
     Environment = var.environment
+    Project     = var.project
   }
 
 }
