@@ -10,9 +10,9 @@ terraform {
 # AWS Provider
 provider "aws" {}
 
-# data "aws_ssm_parameter" "bucket_name" {
-#   name = "/${var.environment}/BUCKET"
-# }
+data "aws_ssm_parameter" "bucket_name" {
+  name = "/${var.environment}/BUCKET"
+}
 
 # module "s3_bucket" {
 #   source = "terraform-aws-modules/s3-bucket/aws"
@@ -46,12 +46,12 @@ provider "aws" {}
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket = "tanjil_oct_23_20202"
+  bucket = "/${var.environment}/BUCKET"
   acl    = "private"
 
-  versioning = {
-    enabled = true
-  }
+  # versioning = {
+  #   enabled = true
+  # }
 
   tags = {
     Name        = "sharebus-fe-${var.environment}"
